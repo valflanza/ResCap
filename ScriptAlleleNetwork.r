@@ -1,3 +1,13 @@
+################
+#	
+#	R script with the pipeline to perform the Allele Network (alternatively to perl script)
+#	and perform the clustering analysis to create the Mapping Gene Clusters. Moreover, the
+#	script includes the loading process of count data and the fusion of both parts (allele network and count data)
+#
+#
+################
+
+
 library("tidyverse")
 library("MCL")
 library("igraph")
@@ -100,10 +110,17 @@ for(i in lista)
 ##### Join AlleleNetwork and Data abundance ############
 
 Full.table = Full.table %>% separate(Sample, c("Sample","DataSet","kk"), sep ="\\.") %>% select(-kk) %>% full_join(.,tmp)
+
+#### Modify to fix the filename of count.reads to your file that contains the number of total reads per sample
 reads = read_table("count.reads",col_names = FALSE)
-colnames(reads) = c("TotalReads","Sample")
-reads$Sample = gsub(".R1.fastq","",reads$Sample)
+colnames(reads) = c("TotalReads","Sample") 
+####
+
+### optional sentences
+reads$Sample = gsub(".R1.fastq","",reads$Sample) 
 reads$TotalReads = reads$TotalReads/4
+###
+
 Full.table = full_join(Full.table, reads)
 Full.table = Full.table %>% mutate(FinalClust = ifelse(is.na(Cluster),Gene,paste(DataSet,Cluster,sep="")))
 RepresentativesOfCluster = Full.table %>% group_by(FinalClust,Gene) %>% summarise(conn = max(Connections)) %>% group_by(FinalClust) %>% mutate(top = max(conn)) %>% filter(conn == top) %>% group_by(FinalClust) %>% summarise(Representative = first(Gene))

@@ -15,6 +15,6 @@ Repository structure:
 	- _BlastnResultsAgainstResCapDB.tsv.gz_ (Blast results of the ORF of metagenomic assemblies)
 	- _BlastpResultsAgainstUniProtKB.tsv.gz_ (Blast results of the ORF of metagenomic assemblies)
 	- _DiffAnalysisMSS.tsv_ (Differential analysis from DESeq2 for MSS samples)
-	- _DiffAnalysisRescap.tsv_ (Differential analysis from DESeq2 for ResCao samples)
+	- _DiffAnalysisRescap.tsv_ (Differential analysis from DESeq2 for ResCap samples)
 	- _FullDataTable.tsv_ (All samples data table in tidy format)
 

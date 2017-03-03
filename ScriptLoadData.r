@@ -1,3 +1,9 @@
+#####
+#
+#	R script to load count data using tidyverse package.
+#	All count files must be in the R working directory
+#
+####
 library("tidyverse")
 lista = dir()[grep("csv",dir())]
 
