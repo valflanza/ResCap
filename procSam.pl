@@ -1,5 +1,18 @@
 #!/usr/bin/perl
 
+################################################
+# 	
+#	procSam.pl perform the counting of reads per gene, reads per kilobase per gene,
+#		number of unequivocally mapped reads and alignment horizontal coverage. The output
+#		is a table with the described fields as columns and the founded genes as rows.
+#	procSam.pl is implemented by procSamples.pl is the standart pipeline.
+#
+#	Usage:
+#		./procSam.pl fileWithGeneLengths.txt OutputProcSamplesfile.drs > sampleCounts.cvs
+#
+#
+#
+################################################
 open(B,$ARGV[1]);
 @len = <B>;
 close B;

@@ -1,11 +1,27 @@
 #!/usr/bin/perl
 
 
+###########################################
+#
+#	proSamples.pl is the standard pipeline for the analysis of ResCap set of samples. 
+#	First it performs a mapping process with Bowtie 2, then parse the SAM file to DRS file
+#	and finally performs the ./procSam.pl script to calculate the count table.
+#
+#	Usage:
+#	  Batch Mode:	
+#		./proSamples.pl *R1.fastq.gz		(Supose that all the reads file are in the same folder
+#									 		 and the forward reads have the subfix R1)
+#
+#	  Single Mode:
+#		./procSample.pl ReadsFile.R1.fastq
+#		
+###########################################
+
 foreach $ar (@ARGV)
 {
 	$r1 = $ar;
 	$r2 = $ar;
-	$r2 =~ s/R1/R2/;
+	$r2 =~ s/R1/R2/;   ### Modify if it is neccesary to fix with the raw data file names
 	
 	@c = split(/\./,$ar);
 	$name = $c[0];

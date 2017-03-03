@@ -1,4 +1,13 @@
 #!/usr/bin/perl
+################################################
+#
+# alleleNetwork.pl performs the allele network from the original .drs file produced by procSam.pl 
+# Different allele network files can be concateanted in one single file to perform the Mapping Gene Cluster
+# set up.
+#
+#	Usage:
+#		./alleleNetwork.pl file.drs > alleleNetwork.csv
+################################################
 
 
 open(A,$ARGV[0]);
