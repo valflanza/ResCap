@@ -1,52 +1,46 @@
 #!/usr/bin/perl
-################################################
-#
-# alleleNetwork.pl performs the allele network from the original .drs file produced by procSam.pl 
-# Different allele network files can be concateanted in one single file to perform the Mapping Gene Cluster
-# set up.
-#
-#	Usage:
-#		./alleleNetwork.pl file.drs > alleleNetwork.csv
-################################################
 
 
-open(A,$ARGV[0]);
-@txt = <A>;
-close A;
-
-undef @lecturas;
-$anterior="";
-$read="";
-
-foreach $l (@txt)
+foreach $ar (@ARGV)
 {
-	@c = split('\t',$l);
-	$read = $c[0];
-	$gen = $c[1];
-	
-	if ($read eq $anterior)
+	undef @lecturas;
+	open(A,$ar);
+	$anterior="";
+	$read="";
+
+	while ($l = <A>)
 	{
-		push(@lecturas,$gen);
-	}else{
-		if(@lecturas)
-		{
-			for($i=0;$i<=scalar(@lecturas);$i++)
-			{
-				for($j=i;$j<=scalar(@lecturas);$j++)
-				{
-					$hash{"$lecturas[$i]\t$lecturas[$j]"}++;
-					$hash{"$lecturas[$j]\t$lecturas[$i]"}++;
-				}
-			}
-		}else{
-			$hash{"$gen\t$gen"}++;			
-		}
+		@c = split('\t',$l);
+		$read = $c[0];
+		$gen = $c[1];
 		
-		undef @lecturas;
-		$lecturas[0] = $gen;
+		if ($read eq $anterior)
+		{
+			push(@lecturas,$gen);
+		}else{
+			if(@lecturas)
+			{
+				for($i=0;$i<=scalar(@lecturas);$i++)
+				{
+					for($j=i;$j<=scalar(@lecturas);$j++) 
+					{
+						$hash{"$lecturas[$i]\t$lecturas[$j]"}++;
+						$hash{"$lecturas[$j]\t$lecturas[$i]"}++;
+					}
+				}
+			}else{
+				$hash{"$gen\t$gen"}++;			
+			}
+			
+			undef @lecturas;
+			$lecturas[0] = $gen;
+		}
+		$anterior = $read;
 	}
-	$anterior = $read;
+
+	close A;
 }
+
 foreach $k (keys(%hash))
 {
 	print "$k\t$hash{$k}\n";
